@@ -24,7 +24,11 @@ cls
 call :input "Suma"
 set /a real_result=%real1% + %real2%
 set /a imag_result=%imag1% + %imag2%
-call :format_output %real_result% %imag_result%
+if %imag_result% geq 0 (
+    echo El resultado es: %real_result% + %imag_result%i
+) else (
+    echo El resultado es: %real_result% %imag_result%i
+)
 pause
 goto menu
 
@@ -33,7 +37,11 @@ cls
 call :input "Resta"
 set /a real_result=%real1% - %real2%
 set /a imag_result=%imag1% - %imag2%
-call :format_output %real_result% %imag_result%
+if %imag_result% geq 0 (
+    echo El resultado es: %real_result% + %imag_result%i
+) else (
+    echo El resultado es: %real_result% %imag_result%i
+)
 pause
 goto menu
 
@@ -42,7 +50,11 @@ cls
 call :input "Multiplicacion"
 set /a real_result=%real1% * %real2% - %imag1% * %imag2%
 set /a imag_result=%real1% * %imag2% + %real2% * %imag1%
-call :format_output %real_result% %imag_result%
+if %imag_result% geq 0 (
+    echo El resultado es: %real_result% + %imag_result%i
+) else (
+    echo El resultado es: %real_result% %imag_result%i
+)
 pause
 goto menu
 
@@ -69,17 +81,6 @@ set /p imag2="Parte imaginaria del segundo numero: "
 endlocal & set real1=%real1% & set imag1=%imag1% & set real2=%real2% & set imag2=%imag2%
 goto :eof
 
-:format_output
-set real=%1
-set imag=%2
-if %imag% geq 0 (
-    echo El resultado es: %real% + %imag%i
-) else (
-    set imag_positive=%imag:~1%
-    echo El resultado es: %real% - %imag_positive%i
-)
-goto :eof
-
 :float_division
 setlocal
 set real1=%1
@@ -91,7 +92,11 @@ rem Usar PowerShell para la division con numeros flotantes y 3 decimales
 for /f "tokens=*" %%A in ('powershell -command "[math]::Round((%real1% * %real2% + %imag1% * %imag2%) / (%real2% * %real2% + %imag2% * %imag2%), 3)"') do set real_result=%%A
 for /f "tokens=*" %%B in ('powershell -command "[math]::Round((%imag1% * %real2% - %real1% * %imag2%) / (%real2% * %real2% + %imag2% * %imag2%), 3)"') do set imag_result=%%B
 
-call :format_output %real_result% %imag_result%
+if %imag_result% geq 0 (
+    echo El resultado es: %real_result% + %imag_result%i
+) else (
+    echo El resultado es: %real_result% %imag_result%i
+)
 endlocal
 goto :eof
 
