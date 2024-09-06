@@ -47,27 +47,18 @@ goto menu
 
 :multiplicacion
 cls
-call :input "Multiplicacion"
-set /a real_result=%real1% * %real2% - %imag1% * %imag2%
-set /a imag_result=%real1% * %imag2% + %real2% * %imag1%
-if %imag_result% geq 0 (
-    echo El resultado es: %real_result% + %imag_result%i
-) else (
-    echo El resultado es: %real_result% %imag_result%i
-)
+echo ==============================================
+echo      Multiplicacion de Numeros Complejos
+echo ==============================================
 pause
 goto menu
 
 :division
 cls
-call :input "Division"
-set /a denom=%real2% * %real2% + %imag2% * %imag2%
-if %denom% equ 0 (
-    echo Error: Division por cero no permitida.
-    pause
-    goto menu
-)
-call :float_division %real1% %real2% %imag1% %imag2%
+
+echo ==============================================
+echo      Division de Numeros Complejos
+echo ==============================================
 pause
 goto menu
 
@@ -79,25 +70,6 @@ set /p imag1="Parte imaginaria del primer numero: "
 set /p real2="Parte real del segundo numero: "
 set /p imag2="Parte imaginaria del segundo numero: "
 endlocal & set real1=%real1% & set imag1=%imag1% & set real2=%real2% & set imag2=%imag2%
-goto :eof
-
-:float_division
-setlocal
-set real1=%1
-set real2=%2
-set imag1=%3
-set imag2=%4
-
-rem Usar PowerShell para la division con numeros flotantes y 3 decimales
-for /f "tokens=*" %%A in ('powershell -command "[math]::Round((%real1% * %real2% + %imag1% * %imag2%) / (%real2% * %real2% + %imag2% * %imag2%), 3)"') do set real_result=%%A
-for /f "tokens=*" %%B in ('powershell -command "[math]::Round((%imag1% * %real2% - %real1% * %imag2%) / (%real2% * %real2% + %imag2% * %imag2%), 3)"') do set imag_result=%%B
-
-if %imag_result% geq 0 (
-    echo El resultado es: %real_result% + %imag_result%i
-) else (
-    echo El resultado es: %real_result% %imag_result%i
-)
-endlocal
 goto :eof
 
 :salir
