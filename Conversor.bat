@@ -1,6 +1,6 @@
-:: Equipo Doritos Nacho y Equipo Papas con Chile
-:: 09/10/2024
-:: version 2.0
+::Equipo Doritos Nacho y Equipo Papas con Chile
+:: 11/10/2024
+:: version 2.1
 :: Programa que sirve para el calculo de conversiones de unidades
 
 @echo off
@@ -33,15 +33,17 @@ cls
     echo 2. Minutos a Segundos
     echo 3. Segundos a Milisegundos
     echo 4. Horas a Dias
-    echo 5. Volver al Menu Principal
+    echo 5. Minutos a Horas
+    echo 6. Volver al Menu Principal
     echo =============================
-    set /p tiempo_opcion="Selecciona una opcion (1-5): "
+    set /p tiempo_opcion="Selecciona una opcion (1-6): "
 
     if "%tiempo_opcion%"=="1" goto horasmin
     if "%tiempo_opcion%"=="2" goto minutosseg
     if "%tiempo_opcion%"=="3" goto segmilis
     if "%tiempo_opcion%"=="4" goto horasdias
-    if "%tiempo_opcion%"=="5" goto menu
+    if "%tiempo_opcion%"=="5" goto minutoshor
+    if "%tiempo_opcion%"=="6" goto menu
 pause
 goto tiempo
 
@@ -74,6 +76,13 @@ echo %horas% horas son %dias% dias
 pause
 goto tiempo
 
+:minutoshor
+set /p minutos="Ingresa los minutos: "
+for /f "delims=" %%i in ('powershell -command "Write-Output ([math]::Round([double]%minutos% / 60, 2))"') do set horas=%%i
+echo %minutos% minutos son %horas% horas
+pause
+goto tiempo
+
 :velocidad
     cls
     echo =============================
@@ -81,13 +90,15 @@ goto tiempo
     echo =============================
     echo 1. Km/h a m/s
     echo 2. m/s a Km/h
-    echo 3. Volver al Menu Principal
+    echo 3. mph a km/h
+    echo 4. Volver al Menu Principal
     echo =============================
-    set /p velocidad_opcion="Selecciona una opcion (1-3): "
+    set /p velocidad_opcion="Selecciona una opcion (1-4): "
 
     if %velocidad_opcion%==1 goto kmhms
     if %velocidad_opcion%==2 goto msakh
-    if %velocidad_opcion%==3 goto menu
+    if %velocidad_opcion%==3 goto millas
+    if %velocidad_opcion%==4 goto menu
     pause
     goto velocidad
 
@@ -102,6 +113,13 @@ goto tiempo
     set /p ms="Ingresa la velocidad en m/s: "
     for /f "tokens=*" %%A in ('powershell -command "[math]::round((%ms%*3600/1000), 2)"') do set resultado=%%A
     echo %ms% m/s son %resultado% Km/h
+    pause
+    goto velocidad
+    
+:millas
+    set /p millas="Ingresa la velocidad en millas por hora: "
+    for /f "tokens=*" %%A in ('powershell -command "[math]::round((%millas%*1.609), 2)"') do set kmh=%%A
+    echo %millas% mph son %kmh% km/s
     pause
     goto velocidad
 
