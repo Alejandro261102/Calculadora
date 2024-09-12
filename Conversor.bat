@@ -104,7 +104,7 @@ goto tiempo
 
 :: Se utiliza PowerShell para realizar el cálculo con números flotantes, (powershell -command "[math]::round()"). Y la función round() de PowerShell redondea el resultado a 2 decimales.
 
-Esta línea de comando se repite para cada tipo de conversión de velocidad, el resto del código se mantuvo de la forma original de los compañeros
+::Esta línea de comando se repite para cada tipo de conversión de velocidad, el resto del código se mantuvo de la forma original de los compañeros.
 
 :kmhms
     set /p kmh="Ingresa la velocidad en Km/h: "
